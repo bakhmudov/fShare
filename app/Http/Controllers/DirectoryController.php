@@ -12,7 +12,7 @@ class DirectoryController extends Controller
         $request->validate(['name' => 'required|string']);
         $directory = Directory::create([
             'name' => $request->name,
-            'user_id' => $request->user()->id,
+            'user_id' => auth()->id(),
             'parent_id' => $request->parent_id
         ]);
 

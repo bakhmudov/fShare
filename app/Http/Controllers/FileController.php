@@ -6,12 +6,14 @@ use App\Models\Directory;
 use App\Models\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class FileController extends Controller
 {
     public function store(Request $request)
     {
         $request->validate([
+            'files' => 'required|array',
             'files.*' => 'required|file',
             'directory_id' => 'required|exists:directories,id'
         ]);
@@ -25,6 +27,7 @@ class FileController extends Controller
                 'path' => $path,
                 'size' => $file->getSize(),
                 'directory_id' => $directory->id,
+                'user_id' => auth()->id()
             ]);
         }
 
